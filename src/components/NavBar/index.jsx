@@ -12,48 +12,23 @@ function NavBar() {
         <LogoIcon />
       </LogoContainer>
       <Bar>
-        <Button
-          onClick={() => {
-            console.log("left");
-          }}
-          to="/"
-        >
+        <Button to="/">
           <NavLeftSvg className="l" />
           <ButtonName>1. Sobre Você</ButtonName>
         </Button>
-        <Button
-          onClick={() => {
-            console.log("left");
-          }}
-          to="/sua-marca"
-        >
+        <Button to="/sua-marca">
           <NavCenterSvg />
           <ButtonName>2. Sobre sua Marca</ButtonName>
         </Button>
-        <Button
-          onClick={() => {
-            console.log("left");
-          }}
-          to="/seu-publico"
-        >
+        <Button to="/seu-publico">
           <NavCenterSvg />
           <ButtonName>3. Sobre seu público alvo</ButtonName>
         </Button>
-        <Button
-          onClick={() => {
-            console.log("left");
-          }}
-          to="/personalidade"
-        >
+        <Button to="/personalidade">
           <NavCenterSvg />
           <ButtonName>4. Sobre a personalidade</ButtonName>
         </Button>
-        <Button
-          onClick={() => {
-            console.log("left");
-          }}
-          to="/orcamento"
-        >
+        <Button to="/orcamento">
           <NavRightSvg className="r" />
           <ButtonName>5. Sobre o orçamento</ButtonName>
         </Button>
@@ -145,6 +120,11 @@ const Button = styled(NavLink)`
     svg {
       fill: ${({ theme }) => theme.color.main.color};
     }
+    &:hover {
+      svg {
+        fill: ${({ theme }) => theme.color.main.dark};
+      }
+    }
   }
   svg {
     width: 145%;
@@ -152,6 +132,8 @@ const Button = styled(NavLink)`
     overflow: visible;
     position: absolute;
     z-index: 1;
+    transform-origin: center;
+    transform-box: fill-box;
     fill: ${({ theme }) => theme.color.white};
     pointer-events: none;
     cursor: pointer;
@@ -161,10 +143,17 @@ const Button = styled(NavLink)`
       pointer-events: all;
     }
   }
+
   .l {
     transform: translateX(2%);
+    & + span {
+      transform: translateX(-10%);
+    }
   }
   .r {
     transform: translateX(-2%);
+    & + span {
+      transform: translateX(10%);
+    }
   }
 `;

@@ -1,21 +1,33 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { InputText } from "../Styled";
+import { InputText, LabelTitle, StyledError } from "../Styled";
 import Label from "../Label";
 import { Field } from "formik";
 
-function Radio({ name, title, options, required, other = true, ...props }) {
-  const [otherValue, setOtherValue] = useState("");
+function Radio({
+  name,
+  title,
+  options,
+  required,
+  other = false,
+  otherVal,
+  otherOnChange,
+  otherName,
+  otherError,
+  ...props
+}) {
   return (
     <RadioContainer area={name}>
       <Title>
         {title}
         {required && ` *`}
+        {props.error && <Error>{props.error}</Error>}
       </Title>
       {options.map((value, index, array) => (
         <Option key={index}>
           <RadioInput>
             <Field
+              {...props}
               type="radio"
               name={name}
               required={required}
@@ -28,11 +40,11 @@ function Radio({ name, title, options, required, other = true, ...props }) {
       {other && (
         <Option>
           <RadioInput>
-            <input
+            <Field
               {...props}
               type="radio"
               name={name}
-              value={otherValue}
+              value="Outro"
               required={required}
             />
           </RadioInput>
@@ -40,10 +52,12 @@ function Radio({ name, title, options, required, other = true, ...props }) {
             <OptionOtherName>Outro: Qual?</OptionOtherName>
             <OtherInput
               type="text"
-              error={props.error?.other && props.touched && props.error?.other}
-              value={otherValue}
-              onChange={(e) => setOtherValue(e.target.value)}
+              name={otherName}
+              error={otherError && otherError}
+              value={otherVal}
+              onChange={otherOnChange}
             />
+            {otherError && <Error>{otherError}</Error>}
           </OptionName>
         </Option>
       )}
@@ -53,6 +67,13 @@ function Radio({ name, title, options, required, other = true, ...props }) {
 
 const OtherInput = styled(InputText)`
   width: 90%;
+  ${({ error, theme }) =>
+    error &&
+    `
+  border-color: ${theme.color.yellow};
+
+    
+    `}
 `;
 
 const RadioContainer = styled.div`
@@ -63,7 +84,15 @@ const RadioContainer = styled.div`
   gap: 2rem;
 `;
 
-const Title = styled.h3`
+const Error = styled(StyledError)`
+  font-size: 1rem;
+  letter-spacing: 0.07rem;
+  font-weight: 500;
+  margin-left: 1rem;
+  color: ${({ theme }) => theme.color.main.dark};
+`;
+
+const Title = styled(LabelTitle)`
   width: 100%;
 `;
 
@@ -82,6 +111,7 @@ const OptionName = styled.span`
 const OptionOtherName = styled.span`
   display: flex;
   width: 10%;
+  white-space: nowrap;
 `;
 
 const RadioInput = styled.div`

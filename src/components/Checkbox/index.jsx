@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Field } from "formik";
-import { InputText, Title } from "../Styled";
+import { InputText, LabelTitle, StyledError } from "../Styled";
 import { useEffect, useRef, useState } from "react";
 
 function Checkbox({
@@ -9,15 +9,16 @@ function Checkbox({
   name,
   touched,
   error,
-  other = true,
   required,
+  value,
+  other = false,
   otherOnChange,
   otherName,
-  value,
+  otherError,
+  otherVal,
   ...props
 }) {
   const [useOther, setUseOther] = useState(false);
-  const [otherVal, setOtherVal] = useState("");
 
   useEffect(() => {
     if (!value.includes("Outro")) {
@@ -31,7 +32,7 @@ function Checkbox({
     <CheckboxContainer area={name}>
       <Title>
         {title} {required && `*`}
-        {touched && error && <Error>{error}</Error>}
+        {error && <Error>{error}</Error>}
       </Title>
       {options.map((value, index, array) => (
         <Option key={index}>
@@ -60,18 +61,12 @@ function Checkbox({
           <OtherInputText
             active={value.includes("Outro") ? 1 : 0}
             value={otherVal}
+            error={otherError}
             name={otherName}
-            onChange={({ target }) => {
-              otherOnChange(otherName, target.value);
-              setOtherVal(target.value);
-              if (target.value != "" && !value.includes("Outro")) {
-                value.push("Outro");
-              }
-              if (target.value == "") {
-                value.pop("Outro");
-              }
-            }}
+            onChange={otherOnChange}
           />
+
+          {otherError && <Error>{otherError}</Error>}
         </Other>
       )}
     </CheckboxContainer>
@@ -80,7 +75,7 @@ function Checkbox({
 
 const OtherInputText = styled(InputText)`
   width: 70%;
-  transition: ${({ theme }) => theme.transition.x2};
+  transition: ${({ theme }) => theme.transition.fast};
   border-color: ${({ theme }) => theme.color.main.gray};
   color: ${({ theme }) => theme.color.mediumGray};
 
@@ -91,11 +86,19 @@ const OtherInputText = styled(InputText)`
   color: ${theme.color.white};
     
     `}
+  ${({ error, theme }) =>
+    error &&
+    `
+  border-color: ${theme.color.yellow};
+  width: auto;
+
+    
+    `}
 `;
 
 const Option = styled.div`
   width: 30%;
-
+  min-width: fit-content;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -139,13 +142,15 @@ const CheckboxContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 2rem;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: flex-start;
 `;
 
-
-const Error = styled.span`
+const Title = styled(LabelTitle)``;
+const Error = styled(StyledError)`
   font-size: 1rem;
+  transition: ${({ theme }) => theme.transition.main};
+  white-space: nowrap;
   letter-spacing: 0.07rem;
   font-weight: 500;
   margin-left: 1rem;

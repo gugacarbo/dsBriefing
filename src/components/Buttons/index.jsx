@@ -1,20 +1,41 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-function Buttons({ to, back }) {
+function Buttons({ onClick, to, back, errors = {} }) {
+  const navigate = useNavigate();
   return (
     <ButtonsContainer>
       {back && (
-        <Button back={1} to={back}>
+        <Button back={1} to={back} as={Link}>
           Voltar
         </Button>
       )}
-      <Button to={to}>Próximo</Button>
+      <Button
+        onClick={() => {
+          onClick();
+
+          if (Object.keys(errors).length > 0) {
+            var E = Object.keys(errors)[0];
+            var inp = document.querySelector(`[name="${E}"`);
+            inp &&
+              inp.scrollIntoView({
+                behavior: "smooth",
+                block: "center",
+                inline: "nearest",
+              });
+            } else {
+            navigate(to);
+          }
+        }}
+      >
+        Próximo
+      </Button>
     </ButtonsContainer>
   );
 }
 
 const ButtonsContainer = styled.div`
+  grid-column: 1/3;
   width: 100%;
   padding-top: 2rem;
   padding-bottom: 10rem;
@@ -24,7 +45,7 @@ const ButtonsContainer = styled.div`
   gap: 5rem;
 `;
 
-const Button = styled(Link)`
+const Button = styled.div`
   border: none;
   background-color: transparent;
   outline: none;

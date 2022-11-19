@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Label from "../Label";
 import MiuRating from "@mui/material/Rating";
 import { ReactComponent as CoinsSvg } from "../../assets/coins.svg";
+import { LabelTitle } from "../Styled";
 function Rating({
   title,
   color = "yellowGold",
@@ -16,8 +17,9 @@ function Rating({
   return (
     <RatingContainer area={name}>
       <Title>
-        {title} {required && `*`}
-        {touched && error && <Error>{error}</Error>}
+        {title}
+        {required && `*`}
+        {error && <Error>{error}</Error>}
       </Title>
       <Values>
         <StyledRating
@@ -51,7 +53,6 @@ const RatingContainer = styled.div`
 `;
 
 const StyledRating = styled(MiuRating)`
-  
   label {
     padding: 0.5rem;
   }
@@ -69,7 +70,7 @@ const Values = styled.span`
   }
 `;
 
-const Title = styled.span`
+const Title = styled(LabelTitle)`
   font-size: 1rem;
   letter-spacing: 0.07rem;
   font-weight: 500;

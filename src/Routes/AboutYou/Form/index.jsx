@@ -4,18 +4,20 @@ import Buttons from "../../../components/Buttons";
 import Radio from "../../../components/Radio";
 import { StyledForm } from "../../../components/Styled";
 import Text from "../../../components/Text";
-
+import InputMask from "react-input-mask";
+import { useContext } from "react";
+import ClientBriefingContext from "../../../context/ClientBriefingContext";
 function Form() {
+  const { clientFormData, validateClientForm } = useContext(
+    ClientBriefingContext
+  );
   return (
     <FormContainer>
       <Formik
-        initialValues={{ email: "", password: "" }}
-        validate={(values) => {
-          let errors = {};
-
-          return errors;
-        }}
-        onSubmit={(values, { setSubmitting }) => {
+        initialValues={clientFormData}
+        enableReinitialize={true}
+        validate={validateClientForm}
+        onSubmit={(values, { setSubmitting, ...rest }) => {
           setSubmitting(false);
         }}
       >
@@ -27,6 +29,7 @@ function Form() {
           handleBlur,
           handleSubmit,
           isSubmitting,
+
           /* and other goodies */
         }) => (
           <AboutYouForm onSubmit={handleSubmit}>
@@ -56,6 +59,9 @@ function Form() {
             <Text
               title="TELEFONE"
               type="text"
+              as={InputMask}
+              mask="(99) 99999-9999"
+              maskChar=""
               name="phone"
               required={true}
               onChange={handleChange}
@@ -67,17 +73,23 @@ function Form() {
             <Text
               title="QUAL SUA FUNÇÃO NA EMPRESA"
               type="text"
-              name="position"
+              name="clientOffice"
               required={true}
               onChange={handleChange}
               onBlur={handleBlur}
-              value={values.position}
-              error={errors.position}
-              touched={touched.position}
+              value={values.clientOffice}
+              error={errors.clientOffice}
+              touched={touched.clientOffice}
             />
             <Radio
-              name="goal"
+              name="brandGoal"
+              error={errors.brandGoal}
               title="QUAL É O OBJETIVO DO SEU CONTATO?"
+              other={true}
+              otherName="brandGoalOtherVal"
+              otherOnChange={handleChange}
+              otherError={errors.brandGoalOtherVal}
+              otherVal={values.brandGoalOtherVal}
               options={[
                 [
                   "Design - Quero criar a identidade visual da minha marca",
@@ -90,20 +102,26 @@ function Form() {
               ]}
             />
             <Radio
-              name="meet"
+              name="dsMeet"
+              error={errors.dsMeet}
               title="COMO VOCE CONHECEU A DIGITAL SCUDERO?"
+              other={true}
+              otherName="dsMeetOtherVal"
+              otherOnChange={handleChange}
+              otherError={errors.dsMeetOtherVal}
+              otherVal={values.dsMeetOtherVal}
               options={[
-                ["Indicação", "Indicação"],
+                ["Indicação", "Indicacao"],
                 ["Instagram", "Instagram"],
                 ["Facebook", "Facebook"],
                 ["Site", "Site"],
                 ["Whatsapp", "Whatsapp"],
               ]}
             />
+            <Buttons to="/sua-marca" onClick={handleSubmit} errors={errors} />
           </AboutYouForm>
         )}
       </Formik>
-      <Buttons to="/sua-marca" />
     </FormContainer>
   );
 }
@@ -112,19 +130,20 @@ const AboutYouForm = styled(StyledForm)`
   width: 100%;
   height: 100%;
   display: grid;
-  grid-template-columns: 50% 50%;
+  grid-template-columns: 42.5% 42.5%;
   gap: 5rem;
   grid-template-areas:
     "name email"
-    "phone position"
-    "goal goal"
-    "meet meet";
+    "phone clientOffice"
+    "brandGoal brandGoal"
+    "dsMeet dsMeet";
 `;
 const FormContainer = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 `;
 
 export default Form;

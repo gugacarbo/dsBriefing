@@ -1,20 +1,22 @@
 import { Formik } from "formik";
+import { useContext } from "react";
 import styled from "styled-components";
 import Buttons from "../../../components/Buttons";
 import Radio from "../../../components/Radio";
 import { StyledForm } from "../../../components/Styled";
 import Text from "../../../components/Text";
+import BrandBrandriefingContext from "../../../context/BrandBrandriefingContext";
 
 function Form() {
+  const { brandFormData, validateBrandForm } = useContext(
+    BrandBrandriefingContext
+  );
   return (
     <FormContainer>
       <Formik
-        initialValues={{ email: "", password: "" }}
-        validate={(values) => {
-          let errors;
-
-          return errors;
-        }}
+        initialValues={brandFormData}
+        enableReinitialize={true}
+        validate={validateBrandForm}
         onSubmit={(values, { setSubmitting }) => {
           setSubmitting(false);
         }}
@@ -162,10 +164,15 @@ function Form() {
               error={errors.brandCompetitorsDiferential}
               touched={touched.brandCompetitorsDiferential}
             />
+            <Buttons
+              back="/"
+              to="/seu-publico"
+              onClick={handleSubmit}
+              errors={errors}
+            />
           </BrandForm>
         )}
       </Formik>
-      <Buttons back="/" to="/seu-publico" />
     </FormContainer>
   );
 }

@@ -2,6 +2,7 @@ import Slider from "@mui/material/Slider";
 
 import styled, { useTheme } from "styled-components";
 import Label from "../Label";
+import { LabelTitle } from "../Styled";
 
 function Range({
   title,
@@ -70,7 +71,8 @@ function Range({
       {value?.[0] && (
         <Values>
           {value?.[0] <= min ? "Menor que " : "De "}
-          <b>{value?.[0]}</b> {subtitle} {value?.[1] >= max ? "E Maior que " : "a "}
+          <b>{value?.[0]}</b> {subtitle}{" "}
+          {value?.[1] >= max ? "E Maior que " : "a "}
           <b>{value?.[1]}</b> {subtitle}
         </Values>
       )}
@@ -91,7 +93,7 @@ const Values = styled.span`
     color: ${({ theme }) => theme.color.main.color};
   }
 `;
-const Title = styled.span`
+const Title = styled(LabelTitle)`
   font-size: 1rem;
   letter-spacing: 0.07rem;
   font-weight: 500;

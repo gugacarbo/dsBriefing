@@ -7,23 +7,19 @@ import Range from "../../../components/Range";
 import Radio from "../../../components/Radio";
 import Text from "../../../components/Text";
 import Rating from "../../../components/Rating";
+import { useContext } from "react";
+import TargetPublicBriefingContext from "../../../context/TargetPublicBriefingContext";
 
 function Form() {
+  const { targetPublicFormData, validateTargetPublicForm } = useContext(
+    TargetPublicBriefingContext
+  );
   return (
     <FormContainer>
       <Formik
-        initialValues={{
-          clientType: "",
-          clientGender: "",
-          targetPublicDescription: "",
-          clientPurchasingPower: 0,
-          targetPublicHopeDescription: "",
-          targetPublicAge: [],
-        }}
-        validate={(values) => {
-          let errors;
-          return errors;
-        }}
+        initialValues={targetPublicFormData}
+        enableReinitialize={true}
+        validate={validateTargetPublicForm}
         onSubmit={(values, { setSubmitting }) => {
           console.log(values);
           setSubmitting(false);
@@ -45,8 +41,8 @@ function Form() {
           <BrandForm onSubmit={handleSubmit}>
             <Radio
               name="clientType"
+              error={errors.clientType}
               title="QUE O TIPO DE CLIENTE VOCÊ ATENDE?"
-              other={false}
               required={true}
               options={[
                 ["B2B - Sua empresa atende outras empresas", "B2B"],
@@ -56,8 +52,14 @@ function Form() {
             />
             <Radio
               name="clientGender"
+              error={errors.clientGender}
               title="QUAL O GÊNERO DO SEU PÚBLICO?"
               required={true}
+              other={true}
+              otherName="clientGenderOtherVal"
+              otherOnChange={handleChange}
+              otherError={errors.clientGenderOtherVal}
+              otherVal={values.clientGenderOtherVal}
               options={[
                 ["Totalmente Masculino", "TMas"],
                 ["Totalmente Feminino", "TFem"],
@@ -106,12 +108,19 @@ function Form() {
               required
               value={values.clientPurchasingPower}
               onChange={setFieldValue}
+              error={errors.clientPurchasingPower}
+              touched={touched.clientPurchasingPower}
               name="clientPurchasingPower"
+            />
+            <Buttons
+              back="/sua-marca"
+              to="/personalidade"
+              onClick={handleSubmit}
+              errors={errors}
             />
           </BrandForm>
         )}
       </Formik>
-      <Buttons back="/sua-marca" to="/personalidade" />
     </FormContainer>
   );
 }

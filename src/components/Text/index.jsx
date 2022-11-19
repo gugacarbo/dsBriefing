@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { InputText } from "../Styled";
+import { InputText, LabelTitle } from "../Styled";
 import Label from "../Label";
 
 function Text({ title, name, touched, error, required, ...props }) {
@@ -9,7 +9,7 @@ function Text({ title, name, touched, error, required, ...props }) {
         {title} {required && `*`}
         {touched && error && <Error>{error}</Error>}
       </Title>
-      <InputText type="text" name={name} {...props} required={required} />
+      <InputText type="text" name={name} {...props} />
     </TextContainer>
   );
 }
@@ -17,7 +17,7 @@ const TextContainer = styled(Label)`
   gap: 1rem;
 `;
 
-const Title = styled.span`
+const Title = styled(LabelTitle)`
   font-size: 1.1rem;
   letter-spacing: 0.07rem;
   font-weight: 500;

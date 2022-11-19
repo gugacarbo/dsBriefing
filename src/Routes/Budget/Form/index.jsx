@@ -7,23 +7,19 @@ import Range from "../../../components/Range";
 import Radio from "../../../components/Radio";
 import Text from "../../../components/Text";
 import Rating from "../../../components/Rating";
-
+import BudgetBriefingContext from "../../../context/BudgetBriefingContext";
+import { useContext } from "react";
 function Form() {
+  const { budgetFormData, validateBudgetForm } = useContext(
+    BudgetBriefingContext
+  );
   return (
     <FormContainer>
       <Formik
-        initialValues={{
-          clientType: "",
-          clientGender: "",
-          targetPublicDescription: "",
-          clientPurchasingPower: 0,
-          targetPublicHopeDescription: "",
-          targetPublicAge: [],
-        }}
-        validate={(values) => {
-          let errors;
-          return errors;
-        }}
+        initialValues={budgetFormData}
+        enableReinitialize={true}
+        validate={validateBudgetForm}
+        validateOnMount={true}
         onSubmit={(values, { setSubmitting }) => {
           console.log(values);
           setSubmitting(false);
@@ -39,6 +35,7 @@ function Form() {
           isSubmitting,
           setValues,
           setFieldValue,
+          validateForm,
 
           /* and other goodies */
         }) => (
@@ -49,6 +46,7 @@ function Form() {
               value={values.todayBudget}
               onChange={setFieldValue}
               name="todayBudget"
+              error={errors.todayBudget}
             />
             <Rating
               title="NUMA ESCALA DE 1 A 5, QUANTO A SUA EMPRESA PRETENDE INVESTIR?"
@@ -56,21 +54,27 @@ function Form() {
               value={values.futureBudget}
               onChange={setFieldValue}
               name="futureBudget"
+              error={errors.futureBudget}
             />
             <Radio
               name="hurry"
               title="VOCÊ TEM PRESSA PARA O SEU PROJETO?"
               required={true}
-              other={false}
+              error={errors.hurry}
               options={[
                 ["Sim", "Sim"],
                 ["Não", "Nao"],
               ]}
             />
+            <Buttons
+              back="/personalidade"
+              to="/"
+              onClick={handleSubmit}
+              errors={errors}
+            />
           </BudgetForm>
         )}
       </Formik>
-      <Buttons back="/personalidade" to="/" />
     </FormContainer>
   );
 }

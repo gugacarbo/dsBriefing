@@ -8,21 +8,18 @@ import Radio from "../../../components/Radio";
 import Text from "../../../components/Text";
 import Rating from "../../../components/Rating";
 import Checkbox from "../../../components/Checkbox";
-
+import { useContext } from "react";
+import PersonalityBriefingContext from "../../../context/PersonalityBriefingContext";
 function Form() {
+  const { personalityFormData, validatePersonalityForm } = useContext(
+    PersonalityBriefingContext
+  );
   return (
     <FormContainer>
       <Formik
-        initialValues={{
-          otherVal: "",
-
-          brandCaracteristics: [],
-          brandCaracteristicsOtherVal: "",
-        }}
-        validate={(values) => {
-          let errors;
-          return errors;
-        }}
+        enableReinitialize={true}
+        initialValues={personalityFormData}
+        validate={validatePersonalityForm}
         onSubmit={(values, { setSubmitting }) => {
           console.log(values);
           setSubmitting(false);
@@ -46,10 +43,13 @@ function Form() {
               title="SE SUA EMPRESA FOSSE UMA PESSOA, COMO ELA SERIA? ESCOLHA QUANTAS OPÇÕES ACHAR NECESSÁRIO."
               name="brandCaracteristics"
               value={values.brandCaracteristics}
+              error={errors.brandCaracteristics}
               required={true}
               other={true}
-              otherOnChange={setFieldValue}
+              otherOnChange={handleChange}
               otherName={"brandCaracteristicsOtherVal"}
+              otherVal={values.brandCaracteristicsOtherVal}
+              otherError={errors.brandCaracteristicsOtherVal}
               onBlur={handleBlur}
               options={[
                 "Séria",
@@ -78,7 +78,7 @@ function Form() {
               ]}
             />
             <Text
-              title="DESSAS PALAVRAS QUE VOCÊ ESCOLHEU, CITE 3 QUE VOCÊ CIBSUDERA SEREN AS MAIS FORTES."
+              title="DESSAS PALAVRAS QUE VOCÊ ESCOLHEU, CITE 3 QUE VOCÊ CONSIDERA SEREM AS MAIS FORTES."
               name="brandTopCaracteristics"
               required={true}
               onChange={handleChange}
@@ -129,10 +129,15 @@ function Form() {
               error={errors.competitorsReference}
               touched={touched.competitorsReference}
             />
+            <Buttons
+              back="/seu-publico"
+              to="/orcamento"
+              onClick={handleSubmit}
+              errors={errors}
+            />
           </PersonalityForm>
         )}
       </Formik>
-      <Buttons back="/seu-publico" to="/orcamento" />
     </FormContainer>
   );
 }
