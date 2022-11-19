@@ -19,6 +19,7 @@ function NavBar() {
           to="/"
         >
           <NavLeftSvg className="l" />
+          <ButtonName>1. Sobre Você</ButtonName>
         </Button>
         <Button
           onClick={() => {
@@ -27,6 +28,7 @@ function NavBar() {
           to="/sua-marca"
         >
           <NavCenterSvg />
+          <ButtonName>2. Sobre sua Marca</ButtonName>
         </Button>
         <Button
           onClick={() => {
@@ -35,6 +37,7 @@ function NavBar() {
           to="/seu-publico"
         >
           <NavCenterSvg />
+          <ButtonName>3. Sobre seu público alvo</ButtonName>
         </Button>
         <Button
           onClick={() => {
@@ -43,6 +46,7 @@ function NavBar() {
           to="/personalidade"
         >
           <NavCenterSvg />
+          <ButtonName>4. Sobre a personalidade</ButtonName>
         </Button>
         <Button
           onClick={() => {
@@ -51,6 +55,7 @@ function NavBar() {
           to="/orcamento"
         >
           <NavRightSvg className="r" />
+          <ButtonName>5. Sobre o orçamento</ButtonName>
         </Button>
       </Bar>
     </NavBarContainer>
@@ -89,6 +94,18 @@ const Bar = styled.div`
   align-items: center;
 `;
 
+const ButtonName = styled.span`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  z-index: 2;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: ${({ theme }) => theme.transition.fast};
+`;
+
 const Button = styled(NavLink)`
   display: flex;
   justify-content: center;
@@ -98,16 +115,33 @@ const Button = styled(NavLink)`
   position: relative;
   aspect-ratio: 5;
   pointer-events: none;
+  color: ${({ theme }) => theme.color.black};
+  transition: ${({ theme }) => theme.transition.fast};
 
   &:has(+ .active),
   &:has(+ * + .active),
   &:has(+ * + * + .active),
-  &:has(+ * + * + * + .active) {
+  &:has(+ * + * + * + .active),
+  &:has(+ :hover),
+  &:has(+ * + :hover),
+  &:has(+ * + * + :hover) {
+    color: ${({ theme }) => theme.color.white};
     svg {
       fill: ${({ theme }) => theme.color.main.color};
     }
   }
+
+  &:hover {
+    color: ${({ theme }) => theme.color.white};
+
+    svg {
+      fill: ${({ theme }) => theme.color.main.light};
+    }
+  }
+
   &.active {
+    color: ${({ theme }) => theme.color.white};
+
     svg {
       fill: ${({ theme }) => theme.color.main.color};
     }
@@ -125,9 +159,6 @@ const Button = styled(NavLink)`
 
     * {
       pointer-events: all;
-    }
-    &:hover {
-      fill: ${({ theme }) => theme.color.main.light};
     }
   }
   .l {
