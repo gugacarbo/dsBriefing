@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import Form from "./Form";
-import { motion } from "framer-motion";
-import { Title } from "../../components/Styled";
+import { MotionContainer, Title } from "../../components/Styled";
 
 function AboutYou() {
   return (
@@ -19,7 +18,7 @@ function AboutYou() {
   );
 }
 
-const AboutYouContainer = styled(motion.div)`
+const AboutYouContainer = styled(MotionContainer)`
   width: 100%;
   height: 100%;
   display: flex;

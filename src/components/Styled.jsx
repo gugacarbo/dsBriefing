@@ -1,7 +1,8 @@
+import { Field } from "formik";
 import { motion } from "framer-motion";
 import styled from "styled-components";
 
-export const InputText = styled.input`
+export const InputText = styled(Field)`
   border: none;
   outline: none;
   background-color: transparent;
@@ -9,6 +10,10 @@ export const InputText = styled.input`
   color: ${({ theme }) => theme.color.white};
   font-size: 1.3rem;
   padding: 0.1rem 0.5rem;
+  transition: ${({ theme }) => theme.transition.x2};
+  &:focus {
+    border-color: ${({ theme }) => theme.color.main.color};
+  }
 `;
 
 export const Title = styled.h2`
@@ -36,4 +41,5 @@ export const MotionContainer = styled(motion.div)`
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow-x: hidden;
 `;

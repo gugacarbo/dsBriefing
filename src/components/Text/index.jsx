@@ -9,15 +9,16 @@ function Text({ title, name, touched, error, required, ...props }) {
         {title} {required && `*`}
         {touched && error && <Error>{error}</Error>}
       </Title>
-      <InputText name={name} {...props} required={required} />
+      <InputText type="text" name={name} {...props} required={required} />
     </TextContainer>
   );
 }
-const TextContainer = styled(Label)``;
-
+const TextContainer = styled(Label)`
+  gap: 1rem;
+`;
 
 const Title = styled.span`
-  font-size: 1rem;
+  font-size: 1.1rem;
   letter-spacing: 0.07rem;
   font-weight: 500;
 `;

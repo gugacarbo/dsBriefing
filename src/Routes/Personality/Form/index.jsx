@@ -7,18 +7,17 @@ import Range from "../../../components/Range";
 import Radio from "../../../components/Radio";
 import Text from "../../../components/Text";
 import Rating from "../../../components/Rating";
+import Checkbox from "../../../components/Checkbox";
 
 function Form() {
   return (
     <FormContainer>
       <Formik
         initialValues={{
-          clientType: "",
-          clientGender: "",
-          targetPublicDescription: "",
-          clientPurchasingPower: 0,
-          targetPublicHopeDescription: "",
-          targetPublicAge: [],
+          otherVal: "",
+
+          brandCaracteristics: [],
+          brandCaracteristicsOtherVal: "",
         }}
         validate={(values) => {
           let errors;
@@ -43,70 +42,92 @@ function Form() {
           /* and other goodies */
         }) => (
           <PersonalityForm onSubmit={handleSubmit}>
-            <Radio
-              name="clientType"
-              title="QUE O TIPO DE CLIENTE VOCÊ ATENDE?"
-              other={false}
+            <Checkbox
+              title="SE SUA EMPRESA FOSSE UMA PESSOA, COMO ELA SERIA? ESCOLHA QUANTAS OPÇÕES ACHAR NECESSÁRIO."
+              name="brandCaracteristics"
+              value={values.brandCaracteristics}
               required={true}
+              other={true}
+              otherOnChange={setFieldValue}
+              otherName={"brandCaracteristicsOtherVal"}
+              onBlur={handleBlur}
               options={[
-                ["B2B - Sua empresa atende outras empresas", "B2B"],
-                ["B2C - Sua empresa atende o consumidor final", "B2C"],
-                ["Ambos", "Ambos"],
-              ]}
-            />
-            <Radio
-              name="clientGender"
-              title="QUAL O GÊNERO DO SEU PÚBLICO?"
-              required={true}
-              options={[
-                ["Totalmente Masculino", "TMas"],
-                ["Totalmente Feminino", "TFem"],
-                ["Parcialmente Masculino", "PFem"],
-                ["Parcialmente Feminino", "PFem"],
-                ["Ambos", "Ambos"],
+                "Séria",
+                "Discreta",
+                "Energética",
+                "Extrovertida",
+                "Delicada",
+                "Acessível",
+                "Alegre",
+                "Sensível",
+                "Exclusiva",
+                "Brincalhona",
+                "Madura",
+                "Científica",
+                "Tecnológica",
+                "Conservadora",
+                "Aventureira",
+                "Romântica",
+                "Moderna",
+                "Rústica",
+                "Rebelde",
+                "Tradicional",
+                "Nerd",
+                "Calma",
+                "Elegante",
               ]}
             />
             <Text
-              title="DESCREVA SEU CLIENTE/PUBLICO ALVO COM SUAS PALAVARAS"
-              type="text"
-              name="targetPublicDescription"
+              title="DESSAS PALAVRAS QUE VOCÊ ESCOLHEU, CITE 3 QUE VOCÊ CIBSUDERA SEREN AS MAIS FORTES."
+              name="brandTopCaracteristics"
               required={true}
               onChange={handleChange}
               onBlur={handleBlur}
-              value={values.targetPublicDescription}
-              error={errors.targetPublicDescription}
-              touched={touched.targetPublicDescription}
+              value={values.brandTopCaracteristics}
+              error={errors.brandTopCaracteristics}
+              touched={touched.brandTopCaracteristics}
+            />
+
+            <Text
+              title="SE SUA EMPRESA FOSSE UMA PESSOA, CITE 3 PALAVRAS QUE REFLITAM O QUE ELA NÃO SERIA"
+              name="brandNotCaracteristics"
+              required={true}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.brandNotCaracteristics}
+              error={errors.brandNotCaracteristics}
+              touched={touched.brandNotCaracteristics}
+            />
+
+            <Text
+              title="HÁ ALGUMA COR QUE VOCE QUEIRA NA SUA MARCA?"
+              name="brandColor"
+              required={true}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.brandColor}
+              error={errors.brandColor}
+              touched={touched.brandColor}
             />
             <Text
-              title="COMO VOCÊ GOSTARIA QUE SEUS CLIENTES DESCREVESSEM SUA EMPRESA?"
-              type="text"
-              name="targetPublicHopeDescription"
+              title="HÁ ALGUMA COR QUE VOCE NÃO QUEIRA NA SUA MARCA?"
+              name="brandNotColor"
               required={true}
               onChange={handleChange}
               onBlur={handleBlur}
-              value={values.targetPublicHopeDescription}
-              error={errors.targetPublicHopeDescription}
-              touched={touched.targetPublicHopeDescription}
+              value={values.brandNotColor}
+              error={errors.brandNotColor}
+              touched={touched.brandNotColor}
             />
-            <Range
-              title="QUAL A FAIXA ETÁRIA DO SEU CLIENTE?"
-              subtitle="Anos"
-              name="targetPublicAge"
-              min={13}
+            <Text
+              title="VOCÊ TEM REFERENCIA DE MARCAS/EMPRESAS QUE VOCE GOSTA? SE SIM, INSIRA LINKS"
+              name="competitorsReference"
               required={true}
-              max={60}
-              onChange={setFieldValue}
+              onChange={handleChange}
               onBlur={handleBlur}
-              value={values.targetPublicAge}
-              error={errors.targetPublicAge}
-              touched={touched.targetPublicHopeDescription}
-            />
-            <Rating
-              title="NUMA ESCALA DE 1 A 5, QUAL O PODER DE COMPRA DO SEU CLIENTE?"
-              required
-              value={values.clientPurchasingPower}
-              onChange={setFieldValue}
-              name="clientPurchasingPower"
+              value={values.competitorsReference}
+              error={errors.competitorsReference}
+              touched={touched.competitorsReference}
             />
           </PersonalityForm>
         )}
@@ -118,12 +139,12 @@ function Form() {
 
 const PersonalityForm = styled(StyledForm)`
   grid-template-areas:
-    "clientType clientType"
-    "clientGender clientGender"
-    "targetPublicDescription targetPublicDescription"
-    "targetPublicHopeDescription targetPublicHopeDescription"
-    "targetPublicAge ."
-    "clientPurchasingPower .";
+    "brandCaracteristics brandCaracteristics"
+    "brandTopCaracteristics brandTopCaracteristics"
+    " brandNotCaracteristics brandNotCaracteristics"
+    " brandColor brandColor"
+    " brandNotColor brandNotColor"
+    " competitorsReference competitorsReference";
 `;
 const FormContainer = styled.div`
   width: 100%;

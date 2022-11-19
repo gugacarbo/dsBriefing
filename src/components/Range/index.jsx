@@ -7,8 +7,8 @@ function Range({
   title,
   subtitle,
   name,
-  min,
-  max,
+  min = 0,
+  max = 100,
   touched,
   error,
   onChange,
@@ -28,8 +28,10 @@ function Range({
           onChange(name, e.target.value);
         }}
         name={name}
-        defaultValue={value.length > 0 ? value : [min + max * 0.1, max * 0.9]}
-        value={value.length > 0 ? value : [min + max * 0.1, max * 0.9]}
+        defaultValue={
+          value && value.length > 0 ? value : [min + max * 0.1, max * 0.9]
+        }
+        value={value && value.length > 0 ? value : [min + max * 0.1, max * 0.9]}
         min={min}
         max={max}
         getAriaLabel={() => "Temperature range"}
@@ -67,9 +69,9 @@ function Range({
       />
       {value?.[0] && (
         <Values>
-          <b>{value?.[0] <= min ? "Menor ou Igual a " + min : "De "+ value?.[0]}</b>{" "}
-          a <b>{value?.[1] >= max ? "Menor ou Igual a " + max : value?.[1]}</b>{" "}
-          {subtitle}
+          {value?.[0] <= min ? "Menor que " : "De "}
+          <b>{value?.[0]}</b> {subtitle} {value?.[1] >= max ? "E Maior que " : "a "}
+          <b>{value?.[1]}</b> {subtitle}
         </Values>
       )}
     </RangeContainer>

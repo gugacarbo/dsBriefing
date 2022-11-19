@@ -3,7 +3,7 @@ import { ReactComponent as LogoSvg } from "../../assets/logo.svg";
 import { ReactComponent as NavLeftSvg } from "../../assets/nav/left.svg";
 import { ReactComponent as NavRightSvg } from "../../assets/nav/right.svg";
 import { ReactComponent as NavCenterSvg } from "../../assets/nav/center.svg";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 function NavBar() {
   return (
@@ -16,19 +16,40 @@ function NavBar() {
           onClick={() => {
             console.log("left");
           }}
+          to="/"
         >
           <NavLeftSvg className="l" />
         </Button>
-        <Button>
+        <Button
+          onClick={() => {
+            console.log("left");
+          }}
+          to="/sua-marca"
+        >
           <NavCenterSvg />
         </Button>
-        <Button>
+        <Button
+          onClick={() => {
+            console.log("left");
+          }}
+          to="/seu-publico"
+        >
           <NavCenterSvg />
         </Button>
-        <Button>
+        <Button
+          onClick={() => {
+            console.log("left");
+          }}
+          to="/personalidade"
+        >
           <NavCenterSvg />
         </Button>
-        <Button>
+        <Button
+          onClick={() => {
+            console.log("left");
+          }}
+          to="/orcamento"
+        >
           <NavRightSvg className="r" />
         </Button>
       </Bar>
@@ -62,13 +83,13 @@ const LogoIcon = styled(LogoSvg)`
 `;
 
 const Bar = styled.div`
-  width: 80%;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
-const Button = styled.div`
+const Button = styled(NavLink)`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -78,10 +99,19 @@ const Button = styled.div`
   aspect-ratio: 5;
   pointer-events: none;
 
-  /* background-color: ${({ theme }) => theme.color.main.color};
-  &:nth-child(even) {
-    background-color: ${({ theme }) => theme.color.main.dark};
-  } */
+  &:has(+ .active),
+  &:has(+ * + .active),
+  &:has(+ * + * + .active),
+  &:has(+ * + * + * + .active) {
+    svg {
+      fill: ${({ theme }) => theme.color.main.color};
+    }
+  }
+  &.active {
+    svg {
+      fill: ${({ theme }) => theme.color.main.color};
+    }
+  }
   svg {
     width: 145%;
     height: 145%;
@@ -91,11 +121,13 @@ const Button = styled.div`
     fill: ${({ theme }) => theme.color.white};
     pointer-events: none;
     cursor: pointer;
+    transition: ${({ theme }) => theme.transition.main};
+
     * {
       pointer-events: all;
     }
     &:hover {
-      fill: ${({ theme }) => theme.color.main.color};
+      fill: ${({ theme }) => theme.color.main.light};
     }
   }
   .l {

@@ -12,8 +12,8 @@ import ScrollToTop from "./util/Hooks";
 function App() {
   return (
     <AppContainer>
-      <NavBar></NavBar>
       <Router>
+        <NavBar></NavBar>
         <ScrollToTop />
         <AnimatePresence mode="wait">
           <Routes>

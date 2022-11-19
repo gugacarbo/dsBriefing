@@ -18,9 +18,9 @@ export default {
     yellowGold: "#f1c40f",
     main: {
       color: "#ff5b00",
-      dark: "#ff8c00",
+      dark: "#E8380C",
       darker: "#CC5200",
-      light: "#ffa500",
+      light: "#ff9900",
       complement: "#00F1FF",
       triad: ["#2EFF19", "#3319FF"],
       shadow: ["#804D00", "#E68A00", "#402600"],
