@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-function Buttons({ onClick, to, back, errors = {} }) {
+function Buttons({ onClick, to, back, validateForm }) {
   const navigate = useNavigate();
   return (
     <ButtonsContainer>
@@ -12,20 +12,21 @@ function Buttons({ onClick, to, back, errors = {} }) {
       )}
       <Button
         onClick={() => {
-          onClick();
-
-          if (Object.keys(errors).length > 0) {
-            var E = Object.keys(errors)[0];
-            var inp = document.querySelector(`[name="${E}"`);
-            inp &&
-              inp.scrollIntoView({
-                behavior: "smooth",
-                block: "center",
-                inline: "nearest",
-              });
+          // onClick();
+          validateForm().then((e) => {
+            if (Object.keys(e).length > 0) {
+              var E = Object.keys(e)[0];
+              var inp = document.querySelector(`[name="${E}"`);
+              inp &&
+                inp.scrollIntoView({
+                  behavior: "smooth",
+                  block: "center",
+                  inline: "nearest",
+                });
             } else {
-            navigate(to);
-          }
+              navigate(to);
+            }
+          });
         }}
       >
         Próximo

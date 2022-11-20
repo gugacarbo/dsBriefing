@@ -35,6 +35,7 @@ function Form() {
           isSubmitting,
           setValues,
           setFieldValue,
+          validateForm
 
           /* and other goodies */
         }) => (
@@ -133,6 +134,7 @@ function Form() {
               back="/seu-publico"
               to="/orcamento"
               onClick={handleSubmit}
+              validateForm={validateForm}
               errors={errors}
             />
           </PersonalityForm>

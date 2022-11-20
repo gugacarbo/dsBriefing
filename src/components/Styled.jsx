@@ -14,6 +14,11 @@ export const InputText = styled(Field)`
   &:focus {
     border-color: ${({ theme }) => theme.color.main.color};
   }
+  ${({error, theme}) =>
+    error &&
+    `
+    border-color: ${theme.color.red}
+      `}
 `;
 
 export const LabelTitle = styled.span`

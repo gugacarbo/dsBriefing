@@ -29,6 +29,7 @@ function Form() {
           handleBlur,
           handleSubmit,
           isSubmitting,
+          validateForm,
 
           /* and other goodies */
         }) => (
@@ -118,7 +119,12 @@ function Form() {
                 ["Whatsapp", "Whatsapp"],
               ]}
             />
-            <Buttons to="/sua-marca" onClick={handleSubmit} errors={errors} />
+            <Buttons
+              to="/sua-marca"
+              onClick={handleSubmit}
+              errors={errors}
+              validateForm={validateForm}
+            />
           </AboutYouForm>
         )}
       </Formik>

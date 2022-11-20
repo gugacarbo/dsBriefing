@@ -19,7 +19,6 @@ function Form() {
         initialValues={budgetFormData}
         enableReinitialize={true}
         validate={validateBudgetForm}
-        validateOnMount={true}
         onSubmit={(values, { setSubmitting }) => {
           console.log(values);
           setSubmitting(false);
@@ -71,6 +70,7 @@ function Form() {
               to="/"
               onClick={handleSubmit}
               errors={errors}
+              validateForm={validateForm}
             />
           </BudgetForm>
         )}

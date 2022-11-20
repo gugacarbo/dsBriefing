@@ -29,6 +29,7 @@ function Form() {
           handleBlur,
           handleSubmit,
           isSubmitting,
+          validateForm
           /* and other goodies */
         }) => (
           <BrandForm onSubmit={handleSubmit}>
@@ -169,6 +170,7 @@ function Form() {
               to="/seu-publico"
               onClick={handleSubmit}
               errors={errors}
+              validateForm={validateForm}
             />
           </BrandForm>
         )}

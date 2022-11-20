@@ -36,14 +36,14 @@ function Checkbox({
       </Title>
       {options.map((value, index, array) => (
         <Option key={index}>
-          <label htmlFor={(name + value).toString()}>
+          <label htmlFor={("Ckb" + name + value).replace(/[^a-zA-Z0-9]/g, "")}>
             <CheckboxInput>
               <Field
                 {...props}
                 type="checkbox"
                 name={name}
                 value={value.toString()}
-                id={(name + value).toString()}
+                id={("Ckb" + name + value).replace(/[^a-zA-Z0-9]/g, "")}
               />
             </CheckboxInput>
             <Name>{value}</Name>
@@ -52,9 +52,17 @@ function Checkbox({
       ))}
       {other && (
         <Other>
-          <label>
+          <label
+            htmlFor={("Ckb" + name + "Outro").replace(/[^a-zA-Z0-9]/g, "")}
+          >
             <CheckboxInput>
-              <Field {...props} type="checkbox" name={name} value="Outro" />
+              <Field
+                {...props}
+                type="checkbox"
+                name={name}
+                value="Outro"
+                id={("Ckb" + name + "Outro").replace(/[^a-zA-Z0-9]/g, "")}
+              />
             </CheckboxInput>
             <Name>Outro: Qual?</Name>
           </label>
@@ -111,7 +119,7 @@ const Option = styled.div`
     &:hover {
       div:not(:has(input:checked)) {
         ::after {
-          background-color: ${({ theme }) => theme.color.main.light};
+          background-color: ${({ theme }) => theme.color.main.light + "55"};
         }
       }
       div:has(input:checked) {

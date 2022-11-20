@@ -35,6 +35,7 @@ function Form() {
           isSubmitting,
           setValues,
           setFieldValue,
+          validateForm
 
           /* and other goodies */
         }) => (
@@ -117,6 +118,7 @@ function Form() {
               to="/personalidade"
               onClick={handleSubmit}
               errors={errors}
+              validateForm={validateForm}
             />
           </BrandForm>
         )}

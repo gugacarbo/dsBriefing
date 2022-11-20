@@ -25,40 +25,44 @@ function Radio({
       </Title>
       {options.map((value, index, array) => (
         <Option key={index}>
-          <RadioInput>
-            <Field
-              {...props}
-              type="radio"
-              name={name}
-              required={required}
-              value={value[1]}
-            />
-          </RadioInput>
-          <OptionName>{value[0]} </OptionName>
+          <label>
+            <RadioInput>
+              <Field
+                {...props}
+                type="radio"
+                name={name}
+                required={required}
+                value={value[1]}
+              />
+            </RadioInput>
+            <OptionName>{value[0]} </OptionName>
+          </label>
         </Option>
       ))}
       {other && (
         <Option>
-          <RadioInput>
-            <Field
-              {...props}
-              type="radio"
-              name={name}
-              value="Outro"
-              required={required}
-            />
-          </RadioInput>
-          <OptionName>
-            <OptionOtherName>Outro: Qual?</OptionOtherName>
-            <OtherInput
-              type="text"
-              name={otherName}
-              error={otherError && otherError}
-              value={otherVal}
-              onChange={otherOnChange}
-            />
-            {otherError && <Error>{otherError}</Error>}
-          </OptionName>
+          <label>
+            <RadioInput>
+              <Field
+                {...props}
+                type="radio"
+                name={name}
+                value="Outro"
+                required={required}
+              />
+            </RadioInput>
+            <OptionName>
+              <OptionOtherName>Outro: Qual?</OptionOtherName>
+              <OtherInput
+                type="text"
+                name={otherName}
+                error={otherError && otherError}
+                value={otherVal}
+                onChange={otherOnChange}
+              />
+              {otherError && <Error>{otherError}</Error>}
+            </OptionName>
+          </label>
         </Option>
       )}
     </RadioContainer>
@@ -66,7 +70,8 @@ function Radio({
 }
 
 const OtherInput = styled(InputText)`
-  width: 90%;
+  flex: 1;
+  margin-left: 1rem;
   ${({ error, theme }) =>
     error &&
     `
@@ -90,17 +95,28 @@ const Error = styled(StyledError)`
   font-weight: 500;
   margin-left: 1rem;
   color: ${({ theme }) => theme.color.main.dark};
+  white-space: nowrap;
 `;
 
 const Title = styled(LabelTitle)`
   width: 100%;
 `;
 
-const Option = styled.label`
+const Option = styled.div`
   width: 98%;
   margin-left: auto;
   display: flex;
   align-items: center;
+  label {
+    cursor: pointer;
+    margin-right: auto;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: 1rem;
+    &:has(input[value="Outro"]) {
+      flex: 1;
+    }
+  }
 `;
 
 const OptionName = styled.span`
@@ -110,7 +126,7 @@ const OptionName = styled.span`
 `;
 const OptionOtherName = styled.span`
   display: flex;
-  width: 10%;
+  width: fit-content;
   white-space: nowrap;
 `;
 
@@ -119,7 +135,6 @@ const RadioInput = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 1rem;
   width: 1.1rem;
   height: 1.1rem;
   border-radius: 50%;
