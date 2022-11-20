@@ -60,6 +60,8 @@ const Button = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+    width: 35%;
+
   border: 2px solid
     ${({ theme, back }) => (back ? theme.color.white : theme.color.main.color)};
   color: ${({ theme, back }) =>
