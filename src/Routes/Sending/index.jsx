@@ -51,7 +51,7 @@ function Sending() {
     if (Object.keys(BudgetValidation) != 0) return "/orcamento";
 
     try {
-      const response = await api.post("enviarBriefing.php", {
+      const response = await api.post("/enviarBriefing.php", {
         clientFormData,
         brandFormData,
         targetPublicFormData,
