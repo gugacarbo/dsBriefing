@@ -1,5 +1,5 @@
 import ClientBriefingProvider from "./ClientBriefingContext/ClientBriefingProvider";
-import BrandBrandriefingProvider from "./BrandBrandriefingContext/BrandBrandriefingProvider";
+import BrandBriefingProvider from "./BrandBriefingContext/BrandBriefingProvider";
 import TargetPublicBriefingProvider from "./TargetPublicBriefingContext/TargetPublicBriefingProvider";
 import PersonalityBriefingProvider from "./PersonalityBriefingContext/PersonalityBriefingProvider";
 import BudgetBriefingProvider from "./BudgetBriefingContext/BudgetBriefingProvider";
@@ -8,7 +8,7 @@ import StyleProvider from "./StyleContext/StyleProvider";
 function AppContextProvider({ children }) {
   return (
     <StyleProvider>
-      <BrandBrandriefingProvider>
+      <BrandBriefingProvider>
         <TargetPublicBriefingProvider>
           <PersonalityBriefingProvider>
             <BudgetBriefingProvider>
@@ -16,7 +16,7 @@ function AppContextProvider({ children }) {
             </BudgetBriefingProvider>
           </PersonalityBriefingProvider>
         </TargetPublicBriefingProvider>
-      </BrandBrandriefingProvider>
+      </BrandBriefingProvider>
     </StyleProvider>
   );
 }

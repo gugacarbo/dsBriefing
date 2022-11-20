@@ -5,12 +5,10 @@ import Buttons from "../../../components/Buttons";
 import Radio from "../../../components/Radio";
 import { StyledForm } from "../../../components/Styled";
 import Text from "../../../components/Text";
-import BrandBrandriefingContext from "../../../context/BrandBrandriefingContext";
+import BrandBriefingContext from "../../../context/BrandBriefingContext";
 
 function Form() {
-  const { brandFormData, validateBrandForm } = useContext(
-    BrandBrandriefingContext
-  );
+  const { brandFormData, validateBrandForm } = useContext(BrandBriefingContext);
   return (
     <FormContainer>
       <Formik
@@ -29,7 +27,7 @@ function Form() {
           handleBlur,
           handleSubmit,
           isSubmitting,
-          validateForm
+          validateForm,
           /* and other goodies */
         }) => (
           <BrandForm onSubmit={handleSubmit}>
@@ -190,7 +188,26 @@ const BrandForm = styled(StyledForm)`
     "brandServices brandServices"
     " brandDiferential brandDiferential"
     "brandCompetitors brandCompetitors"
-    "brandCompetitorsDiferential brandCompetitorsDiferential";
+    "brandCompetitorsDiferential brandCompetitorsDiferential"
+    "buttons buttons";
+
+  @media (max-width: 600px) {
+    grid-template-columns: 100%;
+    grid-template-areas:
+      "brandName "
+      " brandSlogan"
+      "brandLocation"
+      " brandExpand"
+      " brandNameReason"
+      " brandBornReason"
+      " brandResume"
+      " brandTime"
+      " brandServices"
+      " brandDiferential"
+      " brandCompetitors"
+      " brandCompetitorsDiferential"
+      "buttons ";
+  }
 `;
 const FormContainer = styled.div`
   width: 100%;

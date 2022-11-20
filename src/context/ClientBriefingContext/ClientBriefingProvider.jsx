@@ -7,7 +7,7 @@ export default ({ children }) => {
   useEffect(() => {
     const localClientData = localStorage.getItem("BriefingClientData");
     if (JSON.parse(localClientData)) {
-      setClientFormData(JSON.parse(localClientData));
+      handleSetClientFormData(JSON.parse(localClientData));
     }
   }, []);
 
@@ -15,57 +15,33 @@ export default ({ children }) => {
 
   const handleSetClientFormData = (data) => {
     if (data) {
-      setClientFormData(data);
-      localStorage.setItem("BriefingClientData", JSON.stringify(data));
+      setClientFormData({
+        ...DefaultClientData,
+        ...data,
+      });
+      localStorage.setItem(
+        "BriefingClientData",
+        JSON.stringify({
+          ...DefaultClientData,
+          ...data,
+        })
+      );
     }
   };
 
-  const clientFormDataTimer = useStateTimer(handleSetClientFormData, 1200);
+  const clientFormDataTimer = useStateTimer(handleSetClientFormData);
 
-  const validateClientForm = (values) => {
-    let errors = {};
-
-    if (!values.name) {
-      errors.name = "Digite Seu Nome";
-    }
-
-    if (!values.email) {
-      errors.email = "Digite Seu Email";
-    } else if (
-      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
-    ) {
-      errors.email = "Email Inválido";
-    }
-
-    if (!values.clientOffice) {
-      errors.clientOffice = "Obrigatório";
-    }
-
-    if (!values.brandGoal) {
-      errors.brandGoal = "Selecione Um";
-    }
-
-    if (values.brandGoal == "Outro" && values.brandGoalOtherVal == "") {
-      errors.brandGoal = "*";
-      errors.brandGoalOtherVal = "Digite a Opção";
-    }
-    if (values.dsMeet == "Outro" && values.dsMeetOtherVal == "") {
-      errors.dsMeet = "*";
-      errors.dsMeetOtherVal = "Digite a Opção";
-    }
-
-    if (!values.dsMeet) {
-      errors.dsMeet = "Selecione Um";
-    }
+  function handleValidation(values) {
     clientFormDataTimer(values);
-    return errors;
-  };
+    return validateClientForm(values);
+  }
 
   return (
     <ClientBriefingContext.Provider
       value={{
         clientFormData,
-        validateClientForm,
+        validateClientForm: handleValidation,
+        clientValidation: validateClientForm,
       }}
     >
       {children}
@@ -82,4 +58,43 @@ const DefaultClientData = {
   brandGoalOtherVal: "",
   dsMeet: "",
   dsMeetOtherVal: "",
+};
+
+const validateClientForm = (values) => {
+  let errors = {};
+
+  if (!values.name) {
+    errors.name = "Digite Seu Nome";
+  }
+  if (!values.phone || values.phone.length < 15) {
+    errors.phone = "Telefone Inválido";
+  }
+
+  if (!values.email) {
+    errors.email = "Digite Seu Email";
+  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+    errors.email = "Email Inválido";
+  }
+
+  if (!values.clientOffice) {
+    errors.clientOffice = "Obrigatório";
+  }
+
+  if (!values.brandGoal) {
+    errors.brandGoal = "Selecione Um";
+  }
+
+  if (values.brandGoal == "Outro" && values.brandGoalOtherVal == "") {
+    errors.brandGoal = "*";
+    errors.brandGoalOtherVal = "Digite a Opção";
+  }
+  if (values.dsMeet == "Outro" && values.dsMeetOtherVal == "") {
+    errors.dsMeet = "*";
+    errors.dsMeetOtherVal = "Digite a Opção";
+  }
+
+  if (!values.dsMeet) {
+    errors.dsMeet = "Selecione Um";
+  }
+  return errors;
 };

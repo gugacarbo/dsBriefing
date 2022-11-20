@@ -81,6 +81,64 @@ function Checkbox({
   );
 }
 
+const CheckboxContainer = styled.div`
+  grid-area: ${({ area }) => area};
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: flex-end;
+  align-items: flex-start;
+  width: 100%;
+  overflow: hidden;
+  @media (max-width: 600px) {
+    width: 90%;
+    margin: 0 auto;
+  }
+`;
+
+const Option = styled.div`
+  width: 100%;
+  max-width: calc(33% - 2rem);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  @media (max-width: 600px) {
+    max-width: 45%;
+  }
+
+  label {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    cursor: pointer;
+    &:hover {
+      div:not(:has(input:checked)) {
+        ::after {
+          background-color: ${({ theme }) => theme.color.main.light + "55"};
+        }
+      }
+      div:has(input:checked) {
+        ::after {
+          background-color: ${({ theme }) => theme.color.main.darker};
+        }
+      }
+    }
+  }
+`;
+const Other = styled(Option)`
+  max-width: 90%;
+  margin: 0 auto;
+  margin-top: 1rem;
+
+  position: relative;
+  label {
+    width: 30%;
+  }
+  input[type="text"] {
+    width: 100%;
+  }
+`;
+
 const OtherInputText = styled(InputText)`
   width: 70%;
   transition: ${({ theme }) => theme.transition.fast};
@@ -104,57 +162,13 @@ const OtherInputText = styled(InputText)`
     `}
 `;
 
-const Option = styled.div`
-  width: 30%;
-  min-width: fit-content;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-
-  label {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    cursor: pointer;
-    &:hover {
-      div:not(:has(input:checked)) {
-        ::after {
-          background-color: ${({ theme }) => theme.color.main.light + "55"};
-        }
-      }
-      div:has(input:checked) {
-        ::after {
-          background-color: ${({ theme }) => theme.color.main.darker};
-        }
-      }
-    }
-  }
-`;
-const Other = styled(Option)`
-  width: 50%;
-  position: relative;
-  label {
-    width: 30%;
-  }
-  input[type="text"] {
-    width: 100%;
-  }
-`;
-
 const Name = styled.span`
-  font-size: 1.2rem;
+  font-size: 1.3rem;
 `;
 
-const CheckboxContainer = styled.div`
-  grid-area: ${({ area }) => area};
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
-  justify-content: space-between;
-  align-items: flex-start;
+const Title = styled(LabelTitle)`
+  width: 100%;
 `;
-
-const Title = styled(LabelTitle)``;
 const Error = styled(StyledError)`
   font-size: 1rem;
   transition: ${({ theme }) => theme.transition.main};
@@ -179,6 +193,10 @@ const CheckboxInput = styled.div`
 
   position: relative;
   cursor: pointer;
+  @media (max-width: 600px) {
+    width: 1.4rem;
+    height: 1.4rem;
+  }
   &::after {
     content: "";
     position: absolute;

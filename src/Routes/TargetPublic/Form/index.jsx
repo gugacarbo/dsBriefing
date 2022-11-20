@@ -35,14 +35,14 @@ function Form() {
           isSubmitting,
           setValues,
           setFieldValue,
-          validateForm
+          validateForm,
 
           /* and other goodies */
         }) => (
           <BrandForm onSubmit={handleSubmit}>
             <Radio
-              name="clientType"
-              error={errors.clientType}
+              name="targetPublicType"
+              error={errors.targetPublicType}
               title="QUE O TIPO DE CLIENTE VOCÊ ATENDE?"
               required={true}
               options={[
@@ -52,15 +52,15 @@ function Form() {
               ]}
             />
             <Radio
-              name="clientGender"
-              error={errors.clientGender}
+              name="targetPublicGender"
+              error={errors.targetPublicGender}
               title="QUAL O GÊNERO DO SEU PÚBLICO?"
               required={true}
               other={true}
-              otherName="clientGenderOtherVal"
+              otherName="targetPublicGenderOtherVal"
               otherOnChange={handleChange}
-              otherError={errors.clientGenderOtherVal}
-              otherVal={values.clientGenderOtherVal}
+              otherError={errors.targetPublicGenderOtherVal}
+              otherVal={values.targetPublicGenderOtherVal}
               options={[
                 ["Totalmente Masculino", "TMas"],
                 ["Totalmente Feminino", "TFem"],
@@ -106,12 +106,12 @@ function Form() {
             />
             <Rating
               title="NUMA ESCALA DE 1 A 5, QUAL O PODER DE COMPRA DO SEU CLIENTE?"
-              required
-              value={values.clientPurchasingPower}
+              required={true}
+              value={values.targetPublicPurchasingPower}
               onChange={setFieldValue}
-              error={errors.clientPurchasingPower}
-              touched={touched.clientPurchasingPower}
-              name="clientPurchasingPower"
+              error={errors.targetPublicPurchasingPower}
+              touched={touched.targetPublicPurchasingPower}
+              name="targetPublicPurchasingPower"
             />
             <Buttons
               back="/sua-marca"
@@ -129,12 +129,24 @@ function Form() {
 
 const BrandForm = styled(StyledForm)`
   grid-template-areas:
-    "clientType clientType"
-    "clientGender clientGender"
+    "targetPublicType targetPublicType"
+    "targetPublicGender targetPublicGender"
     "targetPublicDescription targetPublicDescription"
     "targetPublicHopeDescription targetPublicHopeDescription"
     "targetPublicAge ."
-    "clientPurchasingPower .";
+    "targetPublicPurchasingPower ."
+    "buttons buttons";
+
+  @media (max-width: 600px) {
+    grid-template-areas:
+      "targetPublicType "
+      "targetPublicGender"
+      "targetPublicDescription"
+      "targetPublicHopeDescription"
+      "targetPublicAge"
+      "targetPublicPurchasingPower"
+      "buttons";
+  }
 `;
 const FormContainer = styled.div`
   width: 100%;

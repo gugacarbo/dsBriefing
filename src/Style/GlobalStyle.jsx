@@ -4,14 +4,25 @@ const GlobalStyle = createGlobalStyle`
     html{
         font-size: 16px;
     }
-    @media (max-width: 1800px) {
-        html{
-            font-size: 14px;
-        }
-    }
+    
     @media (max-width: 1350px) {
         html{
             font-size: 13px;
+        }
+    }
+    @media (max-width: 900px) {
+        html{
+            font-size: 12px;
+        }
+    }
+    @media (max-width: 600px) {
+        html{
+            font-size: 11px;
+        }
+    }
+    @media (max-width: 450px) {
+        html{
+            font-size: 10px;
         }
     }
     * {

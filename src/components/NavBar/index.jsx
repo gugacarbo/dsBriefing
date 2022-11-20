@@ -4,11 +4,17 @@ import { ReactComponent as NavLeftSvg } from "../../assets/nav/left.svg";
 import { ReactComponent as NavRightSvg } from "../../assets/nav/right.svg";
 import { ReactComponent as NavCenterSvg } from "../../assets/nav/center.svg";
 import { Link, NavLink } from "react-router-dom";
+import { motion } from "framer-motion";
 
 function NavBar() {
   return (
-    <NavBarContainer>
-      <LogoContainer>
+    <NavBarContainer
+      initial={{ opacity: 0   }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 1 }}
+      transition={{duration: 1}}
+    >
+      <LogoContainer to="enviando">
         <LogoIcon />
       </LogoContainer>
       <Bar>
@@ -39,7 +45,7 @@ function NavBar() {
 
 export default NavBar;
 
-const NavBarContainer = styled.nav`
+const NavBarContainer = styled(motion.nav)`
   width: 100%;
   padding: 2rem;
   display: flex;
@@ -49,7 +55,7 @@ const NavBarContainer = styled.nav`
   padding-bottom: 5rem;
 `;
 
-const LogoContainer = styled.div`
+const LogoContainer = styled(Link)`
   width: 100%;
   padding: 1rem 0;
   display: flex;

@@ -39,6 +39,10 @@ function Range({
         valueLabelDisplay="auto"
         sx={{
           color: value?.[0] ? theme.color.main.color : theme.color.main.darker,
+          ".MuiSlider-thumb": {
+            width: "1.5rem",
+            height: "1.5rem",
+          },
           "& .MuiSlider-valueLabelOpen": {},
           "& .MuiSlider-thumb:hover": {
             boxShadow: "0px 0px 0px 7px " + theme.color.main.light + "22",

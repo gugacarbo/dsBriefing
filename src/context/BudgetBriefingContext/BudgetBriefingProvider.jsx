@@ -7,7 +7,7 @@ export default ({ children }) => {
   useEffect(() => {
     const localBudgetData = localStorage.getItem("BriefingBudgetData");
     if (JSON.parse(localBudgetData)) {
-      setBudgetFormData(JSON.parse(localBudgetData));
+      handleSetBudgetFormData(JSON.parse(localBudgetData));
     }
   }, []);
 
@@ -19,32 +19,29 @@ export default ({ children }) => {
         ...DefaultBudgetData,
         ...data,
       });
-      localStorage.setItem("BriefingBudgetData", JSON.stringify(data));
+      localStorage.setItem(
+        "BriefingBudgetData",
+        JSON.stringify({
+          ...DefaultBudgetData,
+          ...data,
+        })
+      );
     }
   };
 
-  const budgetFormDataTimer = useStateTimer(handleSetBudgetFormData, 1200);
+  const budgetFormDataTimer = useStateTimer(handleSetBudgetFormData);
 
-  const validateBudgetForm = (values) => {
-    let errors = {};
-    if (!values.todayBudget || values.todayBudget == 0) {
-      errors.todayBudget = "Selecione";
-    }
-    if (!values.futureBudget || values.futureBudget == 0) {
-      errors.futureBudget = "Selecione";
-    }
-    if (values.hurry == '') {
-      errors.hurry = "Selecione";
-    }
+  function handleValidation(values) {
     budgetFormDataTimer(values);
-    
-    return errors;
-  };
+    return validateBudgetForm(values);
+  }
+
   return (
     <BudgetBriefingContext.Provider
       value={{
         budgetFormData,
-        validateBudgetForm,
+        validateBudgetForm: handleValidation,
+        budgetValidation: validateBudgetForm,
       }}
     >
       {children}
@@ -56,4 +53,19 @@ const DefaultBudgetData = {
   todayBudget: 0,
   futureBudget: 0,
   hurry: "",
+};
+
+const validateBudgetForm = (values) => {
+  let errors = {};
+  if (!values.todayBudget || values.todayBudget == 0) {
+    errors.todayBudget = "Selecione";
+  }
+  if (!values.futureBudget || values.futureBudget == 0) {
+    errors.futureBudget = "Selecione";
+  }
+  if (values.hurry == "") {
+    errors.hurry = "Selecione";
+  }
+
+  return errors;
 };

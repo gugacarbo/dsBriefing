@@ -17,8 +17,7 @@ function Rating({
   return (
     <RatingContainer area={name}>
       <Title>
-        {title}
-        {required && `*`}
+        {title}{required && `*`}
         {error && <Error>{error}</Error>}
       </Title>
       <Values>

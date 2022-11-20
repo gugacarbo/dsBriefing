@@ -69,18 +69,6 @@ function Radio({
   );
 }
 
-const OtherInput = styled(InputText)`
-  flex: 1;
-  margin-left: 1rem;
-  ${({ error, theme }) =>
-    error &&
-    `
-  border-color: ${theme.color.yellow};
-
-    
-    `}
-`;
-
 const RadioContainer = styled.div`
   grid-area: ${({ area }) => area};
 
@@ -113,6 +101,8 @@ const Option = styled.div`
     display: grid;
     grid-template-columns: auto 1fr;
     column-gap: 1rem;
+    place-items: center;
+    overflow: hidden;
     &:has(input[value="Outro"]) {
       flex: 1;
     }
@@ -123,11 +113,26 @@ const OptionName = styled.span`
   display: flex;
   width: 100%;
   font-size: 1rem;
+  @media (max-width: 450px) {
+    font-size: 1.15rem;
+  }
 `;
 const OptionOtherName = styled.span`
   display: flex;
   width: fit-content;
   white-space: nowrap;
+`;
+const OtherInput = styled(InputText)`
+  flex: 1;
+  width: inherit;
+  margin-left: 1rem;
+  ${({ error, theme }) =>
+    error &&
+    `
+  border-color: ${theme.color.yellow};
+
+    
+    `}
 `;
 
 const RadioInput = styled.div`

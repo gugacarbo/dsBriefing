@@ -14,7 +14,7 @@ export const InputText = styled(Field)`
   &:focus {
     border-color: ${({ theme }) => theme.color.main.color};
   }
-  ${({error, theme}) =>
+  ${({ error, theme }) =>
     error &&
     `
     border-color: ${theme.color.red}
@@ -26,6 +26,7 @@ export const LabelTitle = styled.span`
   letter-spacing: 0.07rem;
   font-weight: 500;
   width: 100%;
+  overflow: hidden;
 `;
 
 export const Title = styled.h2`
@@ -33,6 +34,7 @@ export const Title = styled.h2`
   font-size: 3rem;
   color: ${({ theme }) => theme.color.white};
   letter-spacing: 0.08rem;
+
   b {
     color: ${({ theme }) => theme.color.main.color};
   }
@@ -41,11 +43,17 @@ export const Title = styled.h2`
 export const StyledForm = styled.form`
   width: 100%;
   height: 100%;
+
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 5rem;
-  overflow: hidden;
-  margin: 5rem 0;
+  grid-template-columns: 47.5% 47.5%;
+  column-gap: 5%;
+  row-gap: 4rem;
+
+  margin: 2rem 0;
+  overflow-x: hidden;
+  @media (max-width: 600px) {
+    grid-template-columns: 100%;
+  }
 `;
 
 export const MotionContainer = styled(motion.div)`

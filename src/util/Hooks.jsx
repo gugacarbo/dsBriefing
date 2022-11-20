@@ -5,16 +5,19 @@ export default function ScrollToTop() {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
+    const RollTimer = setTimeout(() => {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }, 200);
+    return () => clearTimeout(RollTimer);
   }, [pathname]);
 
   return null;
 }
 
-export function useStateTimer(callBack, timer = 1000) {
+export function useStateTimer(callBack, timer = 1500) {
   const [saveTimer, setSaveTimer] = useState();
 
   useEffect(() => {

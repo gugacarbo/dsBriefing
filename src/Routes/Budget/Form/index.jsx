@@ -67,9 +67,10 @@ function Form() {
             />
             <Buttons
               back="/personalidade"
-              to="/"
+              to="/enviando"
               onClick={handleSubmit}
               errors={errors}
+              last
               validateForm={validateForm}
             />
           </BudgetForm>
@@ -80,7 +81,19 @@ function Form() {
 }
 
 const BudgetForm = styled(StyledForm)`
-  grid-template-areas: "todayBudget todayBudget" " futureBudget futureBudget" " hurry .";
+  grid-template-areas:
+    "todayBudget todayBudget"
+    " futureBudget futureBudget"
+    " hurry ."
+    "buttons buttons";
+
+  @media (max-width: 600px) {
+    grid-template-areas:
+      "todayBudget "
+      " futureBudget"
+      " hurry "
+      "buttons";
+  }
 `;
 const FormContainer = styled.div`
   width: 100%;

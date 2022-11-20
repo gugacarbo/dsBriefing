@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import BrandBrandriefingContextBrandBrandriefingProvider from "./index";
+import BrandBriefingContext from "./index";
 import { useStateTimer } from "../../util/Hooks";
 
 export default ({ children }) => {
@@ -15,33 +15,31 @@ export default ({ children }) => {
 
   const handleSetBrandFormData = (data) => {
     if (data) {
-      setBrandFormData(data);
-      localStorage.setItem("BriefingBrandData", JSON.stringify(data));
+      setBrandFormData({ ...DefaultBrandData, ...data });
+      localStorage.setItem(
+        "BriefingBrandData",
+        JSON.stringify({ ...DefaultBrandData, ...data })
+      );
     }
   };
 
-  const brandFormDataTimer = useStateTimer(handleSetBrandFormData, 1200);
+  const brandFormDataTimer = useStateTimer(handleSetBrandFormData);
 
-  const validateBrandForm = (values) => {
-    let errors = {};
-    Object.keys(values).map((value, index, array) => {
-      if (values[value] == "") {
-        errors[value] = "Obrigatório";
-      }
-    });
-
+  function handleValidation(values) {
     brandFormDataTimer(values);
-    return errors;
-  };
+    return validateBrandForm(values);
+  }
+
   return (
-    <BrandBrandriefingContextBrandBrandriefingProvider.Provider
+    <BrandBriefingContext.Provider
       value={{
         brandFormData,
-        validateBrandForm,
+        validateBrandForm: handleValidation,
+        brandValidation: validateBrandForm,
       }}
     >
       {children}
-    </BrandBrandriefingContextBrandBrandriefingProvider.Provider>
+    </BrandBriefingContext.Provider>
   );
 };
 
@@ -58,4 +56,15 @@ const DefaultBrandData = {
   brandDiferential: "",
   brandCompetitors: "",
   brandCompetitorsDiferential: "",
+};
+
+const validateBrandForm = (values) => {
+  let errors = {};
+  Object.keys(values).map((value, index, array) => {
+    if (values[value] == "") {
+      errors[value] = "Obrigatório";
+    }
+  });
+
+  return errors;
 };

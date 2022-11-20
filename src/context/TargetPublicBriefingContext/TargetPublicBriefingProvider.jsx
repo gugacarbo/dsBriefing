@@ -19,50 +19,35 @@ export default ({ children }) => {
 
   const handleSetTargetPublicFormData = (data) => {
     if (data) {
-      setTargetPublicFormData(data);
-      localStorage.setItem("BriefingTargetPublicData", JSON.stringify(data));
+      setTargetPublicFormData({
+        ...DefaultTargetPublicData,
+        ...data,
+      });
+      localStorage.setItem(
+        "BriefingTargetPublicData",
+        JSON.stringify({
+          ...DefaultTargetPublicData,
+          ...data,
+        })
+      );
     }
   };
 
   const targetPublicFormDataTimer = useStateTimer(
-    handleSetTargetPublicFormData,
-    1200
+    handleSetTargetPublicFormData
   );
 
-  const validateTargetPublicForm = (values) => {
-    let errors = {};
-    if (!values.clientType) {
-      errors.clientType = "Selecione Um";
-    }
-    if (!values.clientGender) {
-      errors.clientGender = "Selecione";
-    }
-
-    if (values.clientGender == "Outro" && values.clientGenderOtherVal == "") {
-      errors.clientGender = "*";
-      errors.clientGenderOtherVal = "Digite A Opção";
-    }
-
-    if (!values.targetPublicDescription) {
-      errors.targetPublicDescription = "Obrigatório";
-    }
-    if (!values.targetPublicHopeDescription) {
-      errors.targetPublicHopeDescription = "Obrigatório";
-    }
-    if (!values?.targetPublicAge?.[0] || !values?.targetPublicAge?.[1]) {
-      errors.targetPublicAge = "Selecione";
-    }
-    if (values.clientPurchasingPower == 0) {
-      errors.clientPurchasingPower = "Selecione";
-    }
+  function handleValidation(values) {
     targetPublicFormDataTimer(values);
-    return errors;
-  };
+    return validateTargetPublicForm(values);
+  }
+
   return (
     <TargetPublicBriefingContext.Provider
       value={{
         targetPublicFormData,
-        validateTargetPublicForm,
+        validateTargetPublicForm: handleValidation,
+        targetPublicValidation: validateTargetPublicForm,
       }}
     >
       {children}
@@ -71,11 +56,45 @@ export default ({ children }) => {
 };
 
 const DefaultTargetPublicData = {
-  clientType: "",
-  clientGender: "",
-  clientGenderOtherVal: "",
+  targetPublicType: "",
+  targetPublicGender: "",
+  targetPublicGenderOtherVal: "",
   targetPublicDescription: "",
-  clientPurchasingPower: 0,
+  targetPublicPurchasingPower: 0,
   targetPublicHopeDescription: "",
   targetPublicAge: [],
+};
+const validateTargetPublicForm = (values) => {
+  let errors = {};
+  if (!values.targetPublicType) {
+    errors.targetPublicType = "Selecione Um";
+  }
+  if (!values.targetPublicGender) {
+    errors.targetPublicGender = "Selecione";
+  }
+
+  if (
+    values.targetPublicGender == "Outro" &&
+    values.targetPublicGenderOtherVal == ""
+  ) {
+    errors.targetPublicGender = "*";
+    errors.targetPublicGenderOtherVal = "Digite A Opção";
+  }
+
+  if (!values.targetPublicDescription) {
+    errors.targetPublicDescription = "Obrigatório";
+  }
+  if (!values.targetPublicHopeDescription) {
+    errors.targetPublicHopeDescription = "Obrigatório";
+  }
+  if (!values?.targetPublicAge?.[0] || !values?.targetPublicAge?.[1]) {
+    errors.targetPublicAge = "Selecione";
+  }
+  if (
+    !values.targetPublicPurchasingPower ||
+    values.targetPublicPurchasingPower == 0
+  ) {
+    errors.targetPublicPurchasingPower = "Selecione";
+  }
+  return errors;
 };

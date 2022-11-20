@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-function Buttons({ onClick, to, back, validateForm }) {
+function Buttons({ onClick, to, back, validateForm, last }) {
   const navigate = useNavigate();
   return (
     <ButtonsContainer>
@@ -29,14 +29,14 @@ function Buttons({ onClick, to, back, validateForm }) {
           });
         }}
       >
-        Próximo
+        {last ? "Enviar" : "Próximo"}
       </Button>
     </ButtonsContainer>
   );
 }
 
 const ButtonsContainer = styled.div`
-  grid-column: 1/3;
+  grid-area: buttons;
   width: 100%;
   padding-top: 2rem;
   padding-bottom: 10rem;
@@ -44,6 +44,11 @@ const ButtonsContainer = styled.div`
   align-items: center;
   justify-content: flex-end;
   gap: 5rem;
+  @media (max-width: 600px) {
+    gap: 0;
+    justify-content: space-around;
+    padding-bottom: 5rem;
+  }
 `;
 
 const Button = styled.div`
@@ -51,8 +56,10 @@ const Button = styled.div`
   background-color: transparent;
   outline: none;
   border-radius: 5rem;
-  padding: 0.3rem 4rem;
   font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: 2px solid
     ${({ theme, back }) => (back ? theme.color.white : theme.color.main.color)};
   color: ${({ theme, back }) =>
@@ -65,6 +72,14 @@ const Button = styled.div`
       back ? theme.color.white : theme.color.main.color};
     color: ${({ theme, back }) =>
       back ? theme.color.black : theme.color.white};
+  }
+  @media (max-width: 800px) {
+    padding: 0.3rem 0;
+    width: 30%;
+  }
+  @media (max-width: 600px) {
+    padding: 0.3rem 0;
+    width: 40%;
   }
 `;
 

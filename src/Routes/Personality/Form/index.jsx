@@ -35,7 +35,7 @@ function Form() {
           isSubmitting,
           setValues,
           setFieldValue,
-          validateForm
+          validateForm,
 
           /* and other goodies */
         }) => (
@@ -151,7 +151,18 @@ const PersonalityForm = styled(StyledForm)`
     " brandNotCaracteristics brandNotCaracteristics"
     " brandColor brandColor"
     " brandNotColor brandNotColor"
-    " competitorsReference competitorsReference";
+    " competitorsReference competitorsReference"
+    " buttons buttons";
+  @media (max-width: 600px) {
+    grid-template-areas:
+      "brandCaracteristics"
+      "brandTopCaracteristics"
+      " brandNotCaracteristics"
+      " brandColor "
+      " brandNotColor"
+      " competitorsReference"
+      " buttons ";
+  }
 `;
 const FormContainer = styled.div`
   width: 100%;

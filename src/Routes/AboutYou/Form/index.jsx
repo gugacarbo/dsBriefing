@@ -133,23 +133,31 @@ function Form() {
 }
 
 const AboutYouForm = styled(StyledForm)`
-  width: 100%;
-  height: 100%;
-  display: grid;
-  grid-template-columns: 42.5% 42.5%;
-  gap: 5rem;
   grid-template-areas:
     "name email"
     "phone clientOffice"
     "brandGoal brandGoal"
-    "dsMeet dsMeet";
+    "dsMeet dsMeet"
+    "buttons buttons ";
+
+  @media (max-width: 600px) {
+    grid-template-columns: 100%;
+    grid-template-areas:
+      "name "
+      "email"
+      "phone"
+      " clientOffice"
+      "brandGoal"
+      "dsMeet "
+      "buttons ";
+  }
 `;
 const FormContainer = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  overflow-x: hidden;
 `;
 
 export default Form;
