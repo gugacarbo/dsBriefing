@@ -126,18 +126,19 @@ const Option = styled.div`
   }
 `;
 const Other = styled(Option)`
-  max-width: 90%;
+  max-width: 95%;
   margin: 0 auto;
   margin-top: 1rem;
   gap: 1rem;
   position: relative;
   label {
+    gap: 1rem;
     width: auto;
   }
 `;
 
 const OtherInputText = styled(InputText)`
-  width: inherit;
+  width: 10px;
   flex: 1;
   transition: ${({ theme }) => theme.transition.fast};
   border-color: ${({ theme }) => theme.color.main.gray};
@@ -154,7 +155,6 @@ const OtherInputText = styled(InputText)`
     error &&
     `
   border-color: ${theme.color.yellow};
-  width: auto;
 
     
     `}
@@ -182,7 +182,6 @@ const CheckboxInput = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 1rem;
   width: 1.1rem;
   height: 1.1rem;
   border-radius: 50%;
