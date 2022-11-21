@@ -129,18 +129,16 @@ const Other = styled(Option)`
   max-width: 90%;
   margin: 0 auto;
   margin-top: 1rem;
-
+  gap: 1rem;
   position: relative;
   label {
-    width: 30%;
-  }
-  input[type="text"] {
-    width: 100%;
+    width: auto;
   }
 `;
 
 const OtherInputText = styled(InputText)`
-  width: 70%;
+  width: inherit;
+  flex: 1;
   transition: ${({ theme }) => theme.transition.fast};
   border-color: ${({ theme }) => theme.color.main.gray};
   color: ${({ theme }) => theme.color.mediumGray};

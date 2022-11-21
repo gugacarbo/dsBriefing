@@ -38,6 +38,12 @@ export const Title = styled.h2`
   b {
     color: ${({ theme }) => theme.color.main.color};
   }
+  @media (max-width: 800px) {
+    font-size: 2.5rem;
+  }
+  @media (max-width: 400px) {
+    font-size: 2rem;
+  }
 `;
 
 export const StyledForm = styled.form`
@@ -57,7 +63,8 @@ export const StyledForm = styled.form`
 `;
 
 export const MotionContainer = styled(motion.div)`
-  width: 100%;
+  width: 90%;
+  margin: 0 auto;
   height: 100%;
   display: flex;
   flex-direction: column;

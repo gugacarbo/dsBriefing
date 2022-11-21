@@ -15,7 +15,7 @@ function App() {
 }
 
 const AppContainer = styled.div`
-  width: 90vw;
+  width: 100vw;
   min-height: 100vh;
   height: 100%;
 
@@ -24,8 +24,7 @@ const AppContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: #fff;
-  overflow-x: hidden;
+  color: ${({ theme }) => theme.color.main};
   @media (max-width: 600px) {
   }
 `;
